@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Webpage</title>
+    <link rel="stylesheet" href="styles/App.css">
+</head>
+
+<body>
+
+  <div class="dashboard-grid">
+    
+    <div class="profile">
+        <div class="button-list">
+            <h1 style="display: flex; align-items: center;">
+  Devil's Agenda
+  <img src="Trident.png" alt="Trident" style="width: 60px; height: 60px; margin-left: 7px;" />
+</h1>
+            <button type="button1">Profile</button>
+            <button type="button3">Help</button>
+        </div>
+           
+        
+    </div>
+    
+    <div class="calendar">
+      <h3>Calendar</h3>
+      <div class="calendar-grid">
+        <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+        <div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div><div>29</div>
+      </div>
+    </div>
+    
+    <div class="sidebar">
+       
+        <img 
+  id="pet-image" 
+  src="egg.png" 
+  alt="Egg" 
+  style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px; border-radius: 10px;" 
+/>
+
+        
+          <h2>Pet Evolution</h2>
+  <p id="sun-counter">Complete your tasks to see the little devil</p>
+  <button onclick="completeTask()">Complete</button>
+  <button onclick="resetProgress()">Reset</button>
+    </div>
+
+  
+<div class="todo">
+  <h3>To-do</h3>
+  <input type="text" id="new-task-input" placeholder="Add new task" />
+  <button onclick="addTask()">Add</button>
+  <ul id="task-list">
+    
+  </ul>
+</div>
+
+<script>
+  const taskInput = document.getElementById('new-task-input');
+  const taskList = document.getElementById('task-list');
+
+  // Toggle task completed
+  function toggleTask(event) {
+    if (event.target.tagName === 'LI') {
+      event.target.classList.toggle('completed');
+    }
+  }
+
+  // Remove task on right-click
+  function removeTask(event) {
+    if (event.target.tagName === 'LI') {
+      event.preventDefault(); // Prevent context menu
+      if (confirm('Remove this task?')) {
+        event.target.remove();
+      }
+    }
+  }
+
+  // Add new task
+  function addTask() {
+    const taskText = taskInput.value.trim();
+    if (taskText === '') {
+      alert('Please enter a task');
+      return;
+    }
+    const li = document.createElement('li');
+    li.textContent = taskText;
+    taskList.appendChild(li);
+    taskInput.value = '';
+  }
+
+  // Event delegation for toggle and remove
+  taskList.addEventListener('click', toggleTask);
+  taskList.addEventListener('contextmenu', removeTask);
+</script>
+    <div class="remainders">
+
+      <h3>Reminders</h3>
+      <ul>
+        <li>📅 Vet appointment</li>
+        <li>🧼 Bath day</li>
+      </ul>
+    </div>
+
+    <div class="habit">
+      <h3>Habit Tracker</h3>
+      <div class="habit-grid">
+        <div class="habit-box">
+            <h4>Habit 1</h4>
+        </div>
+        <div class="habit-box">
+            <h4>Habit 2</h4>
+        </div>
+      </div>
+    </div>
+
+  <script>
+  const petImage = document.getElementById('pet-image');
+  const sunCounter = document.getElementById('sun-counter');
+  const STAGE_1 = 5;
+  const STAGE_2 = 10;
+
+  // Start at 0 or load saved count
+  let clicks = parseInt(localStorage.getItem('clicks')) || 0;
+
+  function updateDisplay() {
+    if (clicks < STAGE_1) {
+      petImage.src = 'egg.png';
+      petImage.alt = 'Egg';
+      sunCounter.textContent = 'Complete your tasks to see the little devil';
+    } else if (clicks < STAGE_2) {
+      petImage.src = 'sparky_baby.png';
+      petImage.alt = 'Little Devil';
+      sunCounter.textContent = 'Earn more suns to see baby Sparky';
+    } else {
+      petImage.src = 'sparky.png';
+      petImage.alt = 'Sparky';
+      sunCounter.textContent = '🎉 Transformation complete!';
+    }
+  }
+
+  function completeTask() {
+    clicks++;
+    localStorage.setItem('clicks', clicks);
+    updateDisplay();
+  }
+
+  function resetProgress() {
+    clicks = 0;
+    localStorage.setItem('clicks', clicks);
+    updateDisplay();
+  }
+
+  function toggleComplete(taskElement) {
+    const isCompleted = taskElement.classList.contains('completed');
+
+    if (!isCompleted) {
+      taskElement.classList.add('completed');
+      completeTask();
+    } else {
+      taskElement.classList.remove('completed');
+    }
+  }
+
+  // Add click listeners to <li> elements once everything is loaded
+  window.addEventListener('DOMContentLoaded', () => {
+    const todoItems = document.querySelectorAll('.todo ul li');
+    todoItems.forEach(item => {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', () => toggleComplete(item));
+    });
+
+    updateDisplay(); // Also update pet status on page load
+  });
+</script>
+
+
+</body>
+</html>

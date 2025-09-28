@@ -1,0 +1,80 @@
+header {
+  background: #FFF3DE;
+  color: #333333; /* visible text color on pale background */
+  padding: 12px 0;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+nav a {
+  color: #333333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Layout for dashboard with a left vertical widget */
+.app-layout {
+  display: flex;
+  min-height: 100vh; /* make panel span full viewport height */
+  gap: 16px;
+  align-items: stretch;
+  padding: 16px; /* some breathing room so rounded corners are visible */
+  box-sizing: border-box;
+}
+
+/* Dashboard layout (matches requested design) */
+.App {
+  background: #FFF3DE;
+  min-height: 100vh;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh; /* make panel span full viewport height */
+  gap: 16px;
+  align-items: stretch;
+  padding: 16px; /* some breathing room so rounded corners are visible */
+  box-sizing: border-box;
+}
+
+/* Left vertical panel that occupies 25% of the layout */
+.left-panel {
+  /* occupy 25% of the viewport width and be a vertical grid */
+  flex: 0 0 auto;
+  width: 25vw; /* explicitly 25% of the screen width */
+  min-width: 220px; /* avoid too-small on narrow viewports */
+  background: #845747; /* user requested color */
+  color: #845747;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 12px; /* rounded corners */
+  overflow: auto;
+  display: grid;
+  grid-auto-rows: min-content; /* stack items vertically */
+  gap: 16px;
+  align-content: start;
+  min-height: 100vh; /* span full viewport height */
+}
+
+.main-content {
+  flex: 1; /* take remaining space */
+  padding: 24px;
+  box-sizing: border-box;
+}
